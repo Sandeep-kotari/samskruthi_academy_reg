@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <script src="https://kit.fontawesome.com/2f4812b960.js" crossorigin="anonymous"></script>
+<style>
+  .form-container {
+    width: 370px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    margin-top: -20px;
+    box-shadow: rgba(19, 19, 19, 0.35) 4px 5px 15px;
+    margin-left: 110px;
+    background-color: #ffffff;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    font-weight: bold;
+  }
+
+  input[type="text"], input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 8px;
+  }
+
+  button {
+    background-color: #4CAF50;
+    color: white;
+    width: 300px;
+    border: none;
+    border-radius: 68px;
+    cursor: pointer;
+    height: 40px;
+    font-weight: bold;
+   
+    margin-left: 30px;
+
+  }
+
+  .sam{
+    margin-top: -10px;
+    text-align: center;
+    padding-top: 5px;
+  }
+
+
+
+
+   .back-button {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 0px 30px
+  } 
+  
+  .back-button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .back-button:active {
+    background-color: #ecfcf3;
+  }
+
+  .back-symbol {
+    font-size: 24px;
+    cursor: pointer;
+  }
+  .dropdown{
+    border: 2px solid white;
+    position: absolute;
+    padding: 13px;
+    background-color:#f4f2f2;
+    border-radius: 10px;
+
+  }
+  span{
+    font-size: 18px;
+
+  }
+ 
+  /* Align the back symbol at the center of the page */
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+  }
+  
+  .s{
+    background-color: #eeeefd;
+  }
+</style>
+</head>
+<body class="s">
+  <a href="#" class="back-button" onclick="goBack()"><i class="fa-solid fa-arrow-left"></i></a> 
+<div class="main-div" style="display: flex; ">
+    <div class="form-container">
+        <form method="POST">
+          {% csrf_token %}
+          <h1 class="sam">STANDARD</h1>
+            <h1 class="sam">Level-1 + Level-2</h1>
+          <div class="form-group">
+            <label for="cash">Course fee:</label>
+            <input type="number" id="cash" name="cash" value="30000" readonly>
+          </div>
+          <div class="form-group">
+            <label for="duration">Validity:</label>
+            <input type="text" id="duration" name="duration" value="31st march" readonly>
+          </div>
+          <div class="form-group">
+            <label for="coupon1">Apply Coupon:</label>
+            
+            <input type="text" id="coupon1" name="coupon" maxlength=5>
+          </div >
+          <div class="form-group">
+            <label for="cashPaid">Full Cash Payment:</label>
+            <div  style="position: absolute;margin-top:-17px;margin-left: 140px;" >
+            <input type="radio" name="rbutton" id="rbutton" onclick="yesno()" disabled> YES
+            <input type="radio" name="rbutton" id="rbutton1" onclick="yesno()" disabled>NO 
+            </div>
+          
+            <div class="dropdown" id="cashPaid" name="cashPaid" style="visibility: hidden;" >
+                <span ><input type="checkbox" name="" id="checkbox1" onclick="handleCheckboxClick(this)">EMI &rarr; 1 installment</span>
+                <br>
+                <br>
+                <span><input type="checkbox" name="" id="checkbox2" onclick="handleCheckboxClick(this)">EMI &rarr; 3 installments</span>
+                <br>
+                <br>
+                <span><input type="checkbox" name="" id="checkbox3" onclick="handleCheckboxClick(this)">EMI &rarr; 5 installments</span>
+                <br>
+                <br>
+                <span> <input type="checkbox" name="" id="checkbox4" onclick="handleCheckboxClick(this)">EMI &rarr; 7 installments</span>
+                
+            </div>
+            <input type="text" name="" id="emitext" style="margin-top: 25px;visibility: hidden;" readonly >
+          </div>
+          <button type="submit" id="button1">Pay 30000</button>
+    
+        </form>
+    
+        
+      </div>
+
+    <!-- second form -->
+    <div class="form-container">
+        <form method="POST">
+          {% csrf_token %}
+          <h1 class="sam">PREMIUM</h1>
+            <h1 class="sam">Level-1 + Level-2 +Level3</h1>
+          <div class="form-group">
+            <label for="cash">Course fee:</label>
+            <input type="number" id="cash" name="cash" value="35000" readonly>
+          </div>
+          <div class="form-group">
+            <label for="duration">Validity:</label>
+            <input type="text" id="duration" name="duration" value="31st march" readonly>
+          </div>
+          <div class="form-group">
+            <label for="coupon2">Apply Coupon:</label>
+            
+            <input type="text" id="coupon2" name="coupon" maxlength=5>
+          </div >
+          <div class="form-group">
+            <label for="cashPaid">Full Cash Payment:</label>
+            <div  style="position: absolute;margin-top:-17px;margin-left: 140px;" >
+            <input type="radio" name="rbutton" id="rbutton3" onclick="yesno2()" disabled> YES
+            <input type="radio" name="rbutton" id="rbutton4" onclick="yesno2()" disabled> NO 
+            </div>
+          
+            <div class="dropdown" id="cashPaid1" name="cashPaid" style="visibility: hidden;" >
+                <span ><input type="checkbox" name="" id="checkbox5" onclick="handleCheckboxClick2(this)">EMI &rarr; 1 installment</span>
+                <br>
+                <br>
+                <span><input type="checkbox" name="" id="checkbox6" onclick="handleCheckboxClick2(this)">EMI &rarr; 3 installments</span>
+                <br>
+                <br>
+                <span><input type="checkbox" name="" id="checkbox7" onclick="handleCheckboxClick2(this)">EMI &rarr; 5 installments</span>
+                <br>
+                <br>
+                <span> <input type="checkbox" name="" id="checkbox8" onclick="handleCheckboxClick2(this)">EMI &rarr; 7 installments</span>
+                
+            </div>
+            <input type="text" name="" id="emitext1" style="margin-top: 25px;visibility: hidden;" readonly >
+          </div>
+          <button type="submit" id="button2">Pay 35000</button>
+    
+        </form>
+    
+        
+      </div>
+
+
+      
+</div>
+<!-- third form -->
+<div class="main-div" style="display: flex; padding-top: 100px; ">
+    <div class="form-container">
+        <form method="POST">
+          {% csrf_token %}
+          <h1 class="sam">SUPER SSLC/10</h1>
+            <h1 class="sam">Super 25 batch</h1>
+          <div class="form-group">
+            <label for="cash">Course fee:</label>
+            <input type="text" id="cash" name="cash" value="30000" readonly>
+          </div>
+          <div class="form-group">
+            <label for="duration">Validity:</label>
+            <input type="text" id="duration" name="duration" value="31st march" readonly>
+          </div>
+          <div class="form-group">
+            <label for="coupon3">Apply Coupon:</label>
+            
+            <input type="text" id="coupon3" name="coupon" maxlength=5>
+          </div >
+          <div class="form-group">
+            <label for="cashPaid">Full Cash Payment:</label>
+            <div  style="position: absolute;margin-top:-17px;margin-left: 140px;" >
+            <input type="radio" name="rbutton" id="rbutton5" onclick="yesno3()" disabled> YES
+            <input type="radio" name="rbutton" id="rbutton6" onclick="yesno3()" disabled>NO 
+            </div>
+          
+            <div class="dropdown" id="cashPaid3" name="cashPaid" style="visibility: hidden;" >
+                <span ><input type="checkbox" name="" id="checkbox9" onclick="handleCheckboxClick3(this)">EMI &rarr; 1 installment</span>
+                <br>
+                <br>
+                <span><input type="checkbox" name="" id="checkbox10" onclick="handleCheckboxClick3(this)">EMI &rarr; 3 installments</span>
+                <br>
+                <br>
+                <span><input type="checkbox" name="" id="checkbox11" onclick="handleCheckboxClick3(this)">EMI &rarr; 5 installments</span>
+                <br>
+                <br>
+                <span> <input type="checkbox" name="" id="checkbox12" onclick="handleCheckboxClick3(this)">EMI &rarr; 7 installments</span>
+                
+            </div>
+            <input type="text" name="" id="emitext3" style="margin-top: 25px;visibility: hidden;" readonly >
+          </div>
+          <button type="submit" id="button3">Pay 30000</button>
+    
+        </form>
+    
+        
+      </div>
+
+    <!-- four form -->
+    <div class="form-container">
+        <form method="POST">
+          {% csrf_token %}
+          <h1 class="sam">NAVODAYA</h1>
+            <h1 class="sam">Super 25 batch</h1>
+          <div class="form-group">
+            <label for="cash">Course fee:</label>
+            <input type="number" id="cash" name="cash" value="25000" readonly>
+          </div>
+          <div class="form-group">
+            <label for="duration">Validity:</label>
+            <input type="text" id="duration" name="duration" value="31st march" readonly>
+          </div>
+          <div class="form-group">
+            <label for="coupon4">Apply Coupon:</label>
+            
+            <input type="text" id="coupon4" name="coupon" maxlength=5>
+          </div >
+          <div class="form-group">
+            <label for="cashPaid">Full Cash Payment:</label>
+            <div  style="position: absolute;margin-top:-17px;margin-left: 140px;" >
+            <input type="radio" name="rbutton" id="rbutton7" onclick="yesno4()" disabled> YES
+            <input type="radio" name="rbutton" id="rbutton8" onclick="yesno4()" disabled>NO 
+            </div>
+          
+            <div class="dropdown" id="cashPaid4" name="cashPaid" style="visibility: hidden;" >
+                <span ><input type="checkbox" name="" id="checkbox13" onclick="handleCheckboxClick4(this)">EMI &rarr; 1 installment</span>
+                <br>
+                <br>
+                <span><input type="checkbox" name="" id="checkbox14" onclick="handleCheckboxClick4(this)">EMI &rarr; 3 installments</span>
+                <br>
+                <br>
+                <span><input type="checkbox" name="" id="checkbox15" onclick="handleCheckboxClick4(this)">EMI &rarr; 5 installments</span>
+                <br>
+                <br>
+                <span> <input type="checkbox" name="" id="checkbox16" onclick="handleCheckboxClick4(this)">EMI &rarr; 7 installments</span>
+                
+            </div>
+            <input type="text" name="" id="emitext4" style="margin-top: 25px;visibility: hidden;" readonly >
+          </div>
+          <button type="submit" id="button4">Pay 25000</button>
+    
+        </form>
+    
+        
+      </div>
+
+
+      
+</div>
+
+  <script>
+    // JavaScript function to go back to the previous page
+    function goBack() {
+      window.history.back();
+    }
+
+     // JavaScript function  for yes or no 
+    function yesno()
+    {
+
+      var cashPaid = document.getElementById("cashPaid");
+      let emitext = document.getElementById('emitext');
+      var btn= document.getElementById('button1');
+        if (document.getElementById("rbutton1").checked) {
+          cashPaid.style.visibility = "visible";
+          cashPaid.style.marginTop="-120px";
+         
+        } 
+        if (document.getElementById("rbutton").checked) {
+          cashPaid.style.visibility = "hidden";
+          emitext.style.visibility="hidden";
+          btn.textContent="Pay 18500";
+          btn.value=18500;
+          
+        } 
+    }
+
+    function yesno2()
+    {
+
+      var cashPaid = document.getElementById("cashPaid1");
+      let emitext = document.getElementById('emitext1');
+      var btn= document.getElementById('buttton2')
+        if (document.getElementById("rbutton4").checked) {
+          cashPaid.style.visibility = "visible";
+          cashPaid.style.marginTop="-120px";
+         
+        } 
+        if (document.getElementById("rbutton3").checked) {
+          cashPaid.style.visibility = "hidden";
+          emitext.style.visibility="hidden";
+          
+          
+        } 
+    }
+
+
+    function yesno3()
+    {
+
+      var cashPaid = document.getElementById("cashPaid3");
+      let emitext = document.getElementById('emitext3');
+      var btn= document.getElementById('button3');
+        if (document.getElementById("rbutton6").checked) {
+          cashPaid.style.visibility = "visible";
+          cashPaid.style.marginTop="-120px";
+         
+        } 
+        if (document.getElementById("rbutton5").checked) {
+          cashPaid.style.visibility = "hidden";
+          emitext.style.visibility="hidden";
+          btn.textContent="Pay 16500";
+          btn.value=16500;
+        } 
+    }
+
+
+
+
+    function yesno4()
+    {
+
+      var cashPaid = document.getElementById("cashPaid4");
+      let emitext = document.getElementById('emitext4');
+      var btn= document.getElementById('button4');
+        if (document.getElementById("rbutton8").checked) {
+          cashPaid.style.visibility = "visible";
+          cashPaid.style.marginTop="-120px";
+         
+        } 
+        if (document.getElementById("rbutton7").checked) {
+          cashPaid.style.visibility = "hidden";
+          emitext.style.visibility="hidden";
+          btn.textContent="Pay 14000";
+          btn.value=14000;
+        } 
+    }
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+
+        function handleCheckboxClick(clickedCheckbox) {
+         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+         let emitext = document.getElementById('emitext');
+         let cashPaid = document.getElementById('cashPaid');
+
+         // Reset emitext content
+         emitext.value = '';
+
+         // If the clicked checkbox is checkbox1
+         if (clickedCheckbox.id === 'checkbox1') {
+            // Disable other checkboxes
+            document.getElementById('checkbox2').disabled = clickedCheckbox.checked;
+            document.getElementById('checkbox3').disabled = clickedCheckbox.checked;
+            document.getElementById('checkbox4').disabled = clickedCheckbox.checked;
+
+            // Set the selected information to emitext
+            if (clickedCheckbox.checked) {
+               emitext.value = "EMI → 1 installment";
+               cashPaid.style.visibility = "hidden";
+               emitext.style.visibility="visible";
+          
+              
+
+
+            } 
+         }
+         // If the clicked checkbox is checkbox2
+         else if (clickedCheckbox.id === 'checkbox2') {
+            // Disable other checkboxes
+            document.getElementById('checkbox1').disabled = clickedCheckbox.checked;
+            document.getElementById('checkbox3').disabled = clickedCheckbox.checked;
+            document.getElementById('checkbox4').disabled = clickedCheckbox.checked;
+
+            // Set the selected information to emitext
+            if (clickedCheckbox.checked) {
+               emitext.value = "EMI → 3 installment";
+               cashPaid.style.visibility = "hidden";
+               emitext.style.visibility="visible";
+            } 
+         }
+         // If the clicked checkbox is checkbox3
+         else if (clickedCheckbox.id === 'checkbox3') {
+            // Disable other checkboxes
+            document.getElementById('checkbox1').disabled = clickedCheckbox.checked;
+            document.getElementById('checkbox2').disabled = clickedCheckbox.checked;
+            document.getElementById('checkbox4').disabled = clickedCheckbox.checked;
+
+            // Set the selected information to emitext
+            if (clickedCheckbox.checked) {
+               emitext.value = "EMI → 5 installment";
+               cashPaid.style.visibility = "hidden";
+               emitext.style.visibility="visible";
+            } 
+         }
+         // If the clicked checkbox is checkbox4
+         else if (clickedCheckbox.id === 'checkbox4') {
+            // Disable other checkboxes
+            document.getElementById('checkbox1').disabled = clickedCheckbox.checked;
+            document.getElementById('checkbox2').disabled = clickedCheckbox.checked;
+            document.getElementById('checkbox3').disabled = clickedCheckbox.checked;
+
+            // Set the selected information to emitext
+            if (clickedCheckbox.checked) {
+               emitext.value = "EMI → 7 installment";
+               cashPaid.style.visibility = "hidden";
+               emitext.style.visibility="visible";
+            
+            }
+         }
+      }
+
+
+
+
+    //   second
+
+    function handleCheckboxClick2(clickedCheckbox) {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      let emitext = document.getElementById('emitext1');
+      let cashPaid = document.getElementById('cashPaid1');
+
+      // Reset emitext content
+      emitext.value = '';
+
+      // If the clicked checkbox is checkbox1
+      if (clickedCheckbox.id === 'checkbox5') {
+         // Disable other checkboxes
+         document.getElementById('checkbox6').disabled = clickedCheckbox.checked;
+         document.getElementById('checkbox7').disabled = clickedCheckbox.checked;
+         document.getElementById('checkbox8').disabled = clickedCheckbox.checked;
+
+         // Set the selected information to emitext
+         if (clickedCheckbox.checked) {
+            emitext.value = "EMI → 1 installment";
+            cashPaid.style.visibility = "hidden";
+            emitext.style.visibility="visible";
+       
+           
+
+
+         } 
+      }
+      // If the clicked checkbox is checkbox2
+      else if (clickedCheckbox.id === 'checkbox6') {
+         // Disable other checkboxes
+         document.getElementById('checkbox1').disabled = clickedCheckbox.checked;
+         document.getElementById('checkbox7').disabled = clickedCheckbox.checked;
+         document.getElementById('checkbox8').disabled = clickedCheckbox.checked;
+
+         // Set the selected information to emitext
+         if (clickedCheckbox.checked) {
+            emitext.value = "EMI → 3 installment";
+            cashPaid.style.visibility = "hidden";
+            emitext.style.visibility="visible";
+         } 
+      }
+      // If the clicked checkbox is checkbox3
+      else if (clickedCheckbox.id === 'checkbox7') {
+         // Disable other checkboxes
+         document.getElementById('checkbox5').disabled = clickedCheckbox.checked;
+         document.getElementById('checkbox6').disabled = clickedCheckbox.checked;
+         document.getElementById('checkbox8').disabled = clickedCheckbox.checked;
+
+         // Set the selected information to emitext
+         if (clickedCheckbox.checked) {
+            emitext.value = "EMI → 5 installment";
+            cashPaid.style.visibility = "hidden";
+            emitext.style.visibility="visible";
+         } 
+      }
+      // If the clicked checkbox is checkbox4
+      else if (clickedCheckbox.id === 'checkbox8') {
+         // Disable other checkboxes
+         document.getElementById('checkbox5').disabled = clickedCheckbox.checked;
+         document.getElementById('checkbox6').disabled = clickedCheckbox.checked;
+         document.getElementById('checkbox7').disabled = clickedCheckbox.checked;
+
+         // Set the selected information to emitext
+         if (clickedCheckbox.checked) {
+            emitext.value = "EMI → 7 installment";
+            cashPaid.style.visibility = "hidden";
+            emitext.style.visibility="visible";
+         
+         }
+      }
+   }
+  
+
+
+
+
+
+   
+
+
+ function handleCheckboxClick3(clickedCheckbox) {
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  let emitext = document.getElementById('emitext3');
+  let cashPaid = document.getElementById('cashPaid3');
+
+  // Reset emitext content
+  emitext.value = '';
+
+  // If the clicked checkbox is checkbox1
+  if (clickedCheckbox.id === 'checkbox9') {
+     // Disable other checkboxes
+     document.getElementById('checkbox10').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox11').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox12').disabled = clickedCheckbox.checked;
+
+     // Set the selected information to emitext
+     if (clickedCheckbox.checked) {
+        emitext.value = "EMI → 1 installment";
+        cashPaid.style.visibility = "hidden";
+        emitext.style.visibility="visible";
+   
+       
+
+
+     } 
+  }
+  // If the clicked checkbox is checkbox2
+  else if (clickedCheckbox.id === 'checkbox10') {
+     // Disable other checkboxes
+     document.getElementById('checkbox9').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox11').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox12').disabled = clickedCheckbox.checked;
+
+     // Set the selected information to emitext
+     if (clickedCheckbox.checked) {
+        emitext.value = "EMI → 3 installment";
+        cashPaid.style.visibility = "hidden";
+        emitext.style.visibility="visible";
+     } 
+  }
+  // If the clicked checkbox is checkbox3
+  else if (clickedCheckbox.id === 'checkbox11') {
+     // Disable other checkboxes
+     document.getElementById('checkbox9').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox10').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox12').disabled = clickedCheckbox.checked;
+
+     // Set the selected information to emitext
+     if (clickedCheckbox.checked) {
+        emitext.value = "EMI → 5 installment";
+        cashPaid.style.visibility = "hidden";
+        emitext.style.visibility="visible";
+     } 
+  }
+  // If the clicked checkbox is checkbox4
+  else if (clickedCheckbox.id === 'checkbox12') {
+     // Disable other checkboxes
+     document.getElementById('checkbox9').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox10').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox11').disabled = clickedCheckbox.checked;
+
+     // Set the selected information to emitext
+     if (clickedCheckbox.checked) {
+        emitext.value = "EMI → 7 installment";
+        cashPaid.style.visibility = "hidden";
+        emitext.style.visibility="visible";
+     
+     }
+  }
+}
+
+
+
+
+function handleCheckboxClick4(clickedCheckbox) {
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  let emitext = document.getElementById('emitext4');
+  let cashPaid = document.getElementById('cashPaid4');
+
+  // Reset emitext content
+  emitext.value = '';
+
+  // If the clicked checkbox is checkbox1
+  if (clickedCheckbox.id === 'checkbox13') {
+     // Disable other checkboxes
+     document.getElementById('checkbox14').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox15').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox16').disabled = clickedCheckbox.checked;
+
+     // Set the selected information to emitext
+     if (clickedCheckbox.checked) {
+        emitext.value = "EMI → 1 installment";
+        cashPaid.style.visibility = "hidden";
+        emitext.style.visibility="visible";
+   
+       
+
+
+     } 
+  }
+  // If the clicked checkbox is checkbox2
+  else if (clickedCheckbox.id === 'checkbox14') {
+     // Disable other checkboxes
+     document.getElementById('checkbox13').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox15').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox16').disabled = clickedCheckbox.checked;
+
+     // Set the selected information to emitext
+     if (clickedCheckbox.checked) {
+        emitext.value = "EMI → 3 installment";
+        cashPaid.style.visibility = "hidden";
+        emitext.style.visibility="visible";
+     } 
+  }
+  // If the clicked checkbox is checkbox3
+  else if (clickedCheckbox.id === 'checkbox15') {
+     // Disable other checkboxes
+     document.getElementById('checkbox13').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox14').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox16').disabled = clickedCheckbox.checked;
+
+     // Set the selected information to emitext
+     if (clickedCheckbox.checked) {
+        emitext.value = "EMI → 5 installment";
+        cashPaid.style.visibility = "hidden";
+        emitext.style.visibility="visible";
+     } 
+  }
+  // If the clicked checkbox is checkbox4
+  else if (clickedCheckbox.id === 'checkbox16') {
+     // Disable other checkboxes
+     document.getElementById('checkbox13').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox14').disabled = clickedCheckbox.checked;
+     document.getElementById('checkbox15').disabled = clickedCheckbox.checked;
+
+     // Set the selected information to emitext
+     if (clickedCheckbox.checked) {
+        emitext.value = "EMI → 7 installment";
+        cashPaid.style.visibility = "hidden";
+        emitext.style.visibility="visible";
+     
+     }
+  }
+}
+</script>
+<script>
+  // Add event listener to the input element with id "coupon"
+  document.getElementById('coupon1').addEventListener('input', function() {
+    // Get the input value and remove leading/trailing whitespaces
+    var inputValue = this.value.trim();
+
+    // Get the button element
+    var payButton = document.getElementById('button1');
+    var ra1=document.getElementById('rbutton');
+    var ra2=document.getElementById('rbutton1');
+    // Check if the input value has 8 characters
+    if (inputValue.length === 5) {
+      // Set the button value to "Pay 29000" if 8 characters are typed
+      payButton.textContent = "Pay 24500";
+      ra1.disabled=false;
+      ra2.disabled=false;
+    }else{
+      payButton.textContent = "Pay 30000";
+    }
+  });
+
+
+
+
+ // Add event listener to the input element with id "coupon"
+ document.getElementById('coupon2').addEventListener('input', function() {
+  // Get the input value and remove leading/trailing whitespaces
+  var inputValue = this.value.trim();
+
+  // Get the button element
+  var payButton = document.getElementById('button2');
+  var ra1=document.getElementById('rbutton3');
+  var ra2=document.getElementById('rbutton4');
+  // Check if the input value has 8 characters
+  if (inputValue.length === 5) {
+    // Set the button value to "Pay 29000" if 8 characters are typed
+    payButton.textContent = "Pay 35000";
+    ra1.disabled=false;
+    ra2.disabled=false;
+  }else{
+    payButton.textContent = "Pay 35000";
+  } 
+});
+
+
+
+ // Add event listener to the input element with id "coupon"
+ document.getElementById('coupon3').addEventListener('input', function() {
+  // Get the input value and remove leading/trailing whitespaces
+  var inputValue = this.value.trim();
+
+  // Get the button element
+  var payButton = document.getElementById('button3');
+  var ra1=document.getElementById('rbutton5');
+  var ra2=document.getElementById('rbutton6');
+  // Check if the input value has 8 characters
+  if (inputValue.length === 5) {
+    // Set the button value to "Pay 29000" if 8 characters are typed
+    payButton.textContent = "Pay 20000";
+    ra1.disabled=false;
+    ra2.disabled=false;
+  }else{
+    payButton.textContent = "Pay 30000";
+  }
+});
+
+
+
+ // Add event listener to the input element with id "coupon"
+ document.getElementById('coupon4').addEventListener('input', function() {
+  // Get the input value and remove leading/trailing whitespaces
+  var inputValue = this.value.trim();
+
+  // Get the button element
+  var payButton = document.getElementById('button4');
+  var ra1=document.getElementById('rbutton7');
+  var ra2=document.getElementById('rbutton8');
+  // Check if the input value has 8 characters
+  if (inputValue.length === 5) {
+    // Set the button value to "Pay 29000" if 8 characters are typed
+    payButton.textContent = "Pay 17700";
+    ra1.disabled=false;
+    ra2.disabled=false;
+  }else{
+    payButton.textContent = "Pay 25000";
+  }
+});
+</script>
+
+</body>
+</html>

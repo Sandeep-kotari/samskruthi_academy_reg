@@ -1,0 +1,339 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Final Bill</title>
+  <link rel="stylesheet" href="styles.css">
+  {% comment %} <link rel="stylesheet" href="{% static 'print.css' %}" media="print"> {% endcomment %}
+  <style>
+    body {
+      font-family: "Times New Roman", Times, serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f7f7f7;
+      }
+      
+      .bill-container {
+        width: 50%;
+        margin: 30px auto;
+        padding: 20px;
+        border: 2px solid #333;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        background-color: #fff;
+      }
+      
+      .header {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+      }
+      
+      .bill-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      
+      .bill-table td {
+        padding: 10px;
+        border: 1px solid #ccc;
+      }
+      
+      .label {
+        font-weight: bold;
+        color: #555;
+      }
+      
+      .payment-details {
+        margin-bottom: 20px;
+      }
+      
+      .payment-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+      }
+      
+      .total-amount {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 20px;
+        text-align: center;
+        color: #333;
+      }
+      
+      .footer {
+      
+        font-style: italic;
+        margin-top: 40px;
+        color: #777;
+      }
+      
+      .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      
+      .print-button {
+        background-color: #333;
+        color: #fff;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      
+      .print-button:hover {
+        background-color: #555;
+      }
+      
+
+      .logo {
+      height: 400px;
+      margin-right: 10px;
+      vertical-align: middle;
+      position: absolute; 
+      margin-top: 300px;
+      left: 50%; /* Center the image horizontally */
+      transform: translate(-50%, -50%); /* Center the image perfectly */
+      opacity: 0.2; /* Make the image slightly lighter */
+    }
+    .main-head{
+      font-weight: bold;
+      text-align: center;
+      font-family: sans-serif;
+      font-size: 25px;
+    }
+    .sams{
+      font-weight: bolder;
+      color:#65c0e7f0;
+    }
+    .aca{
+      color: rgba(255, 166, 0, 0.842);
+    }
+
+    .edu{
+      font-size: small;
+      color:#65c0e7f0;
+      margin-top: -4px;
+      margin-left: 30px;
+    }
+    
+  </style>
+</head>
+<body>
+  <form action="billgen" method="POST" id="myForm" class="form1">
+    {% csrf_token %}
+  <div class="bill-container">
+      <div class="division" style="display: flex;">
+          <div class="divi1" style="width: 600px;">  <span>Receipt No:</span><span>{{ reciept }}</span>
+          </div>
+          <div class="divi2"> <span>Date:</span> <span>{{ date }}</span> <p>Place: Mandya
+
+          </p></div>
+      </div>
+      <div class="main-head"><span class="sams">Samskruthi</span> <span class="aca">Academy</span> <p class="edu">Education builds charecter</p></div>
+    <div class="header">
+      <img src="static/Samskruthi Academy logo-1.png" alt="Logo" class="logo">
+    </div>
+    <table class="bill-table">
+      <tr>
+        <td class="label">Student Name:</td>
+        <td>{{ details.student_name }}
+          <input type="hidden" name="student_name" value="{{ details.student_name }}">
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Batch start date:</td>
+        <td>{{ details.start_date }}
+          <input type="hidden" name="batch_start_date" value={{ details.start_date }}>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Class:</td>
+        <td>{{ details.classes }}
+          <input type="hidden" name="classes" value={{ details.classes }}>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Board:</td>
+        <td>{{ details.board }}
+          <input type="hidden" name="board" value={{ details.board }}>
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Mobile number:</td>
+        <td>{{ details.mobile_no }}
+          <input type="hidden" name="mobile_number" value="{{ details.mobile_no }}">
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Alternative number:</td>
+        <td>{{ details.ambno }}
+          <input type="hidden" name="alternate_mobile_number" value="{{ details.ambno }}">
+        </td>
+      </tr>
+      <tr>
+        <td class="label">School Name:</td>
+        <td>{{ details.school }}
+          <input type="hidden" name="school_name" value="{{ details.school }}">
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Parent Name:</td>
+        <td>{{ details.parent }}
+          <input type="hidden" name="parent_name" value="{{ details.parent }}">
+        </td>
+      </tr>
+      <tr>
+        <td class="label">Course:</td>
+        <td>{{details.course}}
+          <input type="hidden" name="course" value="{{ details.course }}">
+        </td>
+      </tr>
+
+      <tr>
+        <td class="label">Registeration fees:</td>
+        <td>{{ details.regfee }}
+          <input type="hidden" name="registration_fee" value="{{ details.regfee }}">
+        </td>
+      </tr>
+
+      <tr>
+        <td class="label">Tuition fees:</td>
+        <td>{{ details.cmt }}
+          <input type="hidden" name="tution_fee" value="{{ details.cmt }}">
+        </td>
+      </tr>
+
+      <tr>
+        {% if details.emi == "Trial class" or details.emi == "Full cash payment"   %}
+        <td class="label">DP paid amount:</td>
+        <td>0
+          <input type="hidden" name="dp_paid_amount" value="0">        </td>
+        {% else %}
+        <td class="label">DP paid amount:</td>
+        <td>{{details.downp}}
+          <input type="hidden" name="dp_paid_amount" value="{{ details.downp }}"> 
+        </td>
+        {% endif %}
+      </tr>
+
+      <tr>
+        <td class="label">Remaining balance:</td>
+        <td>{{ details.rbalance }}
+          <input type="hidden" name="remaining_balance" value="{{ details.rbalance }}">
+        </td>
+      </tr>
+
+    </table>
+    <div class="payment-details">
+      <div class="payment-row">
+        
+      </div>
+      <div class="payment-row">
+        
+      </div>
+      <div class="payment-row">
+        {% if  details.emi == "Trial class" or details.emi == "Full cash payment"  %}
+        <span class="label">EMI:</span>
+        <span>0
+          <input type="hidden" name="emi" value="0">
+        </span>
+        {% else %}
+        <span class="label">EMI:</span>
+        <span>{{ details.emi }}
+          <input type="hidden" name="emi" value="{{ details.emi }}">
+        </span>
+        {% endif %}
+      </div>
+      <div class="payment-row">
+        {% if details.emi == "Trial class" or details.emi == "Full cash payment"   %}
+        <span class="label">EMI amount per month:</span>
+        <span>0
+          <input type="hidden" name="emi_per_month" value="0">
+        </span>
+        {% else %}
+        <span class="label">EMI amount per month:</span>
+        <span>{{ details.fullcash }}
+          <input type="hidden" name="emi_per_month" value="{{ details.fullcash }}">
+        </span>
+        {% endif %}
+      </div>
+    </div>
+    <div class="payment-row">
+      <span class="label" style="font-size: 24px;">Total:</span>
+        <span style="font-size: 24px;">{{details.totalb}}
+          <input type="hidden" name="total" value="{{ details.totalb }}">
+        </span>
+    </div>
+    
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    <div class="footer">Note: Please preserve this receipt!!</div>
+   
+  </div>
+  <div class="button-container">
+    <button class="print-button" type="submit" id="printButton" onclick="printDiv('myForm')">Print</button>
+  </div>
+</form>
+
+
+{% comment %} <script>
+  document.getElementById('myForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Add your custom logic here, if needed
+
+    // Perform the print action
+    window.print();
+
+    // Now submit the form programmatically after the print action
+    this.submit();
+  });
+</script> {% endcomment %}
+{% comment %} <script>
+  document.getElementById('printButton').addEventListener('click', function() {
+    // Add your custom logic here, if needed
+
+    // Initialize jsPDF
+    var doc = new jsPDF();
+
+    // Get the form element
+    var formElement = document.getElementById('myForm');
+
+    // Generate the PDF from the form's HTML content
+    doc.fromHTML(formElement, 15, 15, {
+      width: 170
+    });
+
+    // Save the PDF with a filename (e.g., "form.pdf")
+    doc.save('form.pdf');
+  });
+</script> {% endcomment %}
+<script>
+  function printDiv(divId) {
+    var printContent = document.getElementById(divId).innerHTML;
+    var originalContent = document.body.innerHTML;
+
+    document.body.innerHTML = printContent;
+    window.print();
+
+    document.body.innerHTML = originalContent;
+    
+}
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Information Form</title>
+  <style>
+    body {
+        font-family: "Times New Roman", Times, serif;
+        background-color: #e9e9e9;
+
+      }
+    .container {
+        max-width: 556px;
+        margin: 0 auto;
+        padding: 35px;
+        border: 1px solid #000;
+        border-radius: 5px;
+        background-color: white;
+        box-shadow: 6px 6px #65c0e7f0, 
+               -5px -5px 10px rgba(255, 166, 0, 0.842),
+                inset -5px -5px 10px white;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    select {
+      width: 103%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+    button {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 10px 122px;
+        border: none;
+        border-radius: 31px;
+        cursor: pointer;
+    }
+    .san{
+        text-align: center;
+        font-family: sans-serif;
+        font-size: 28px;
+    }
+
+    .center {
+        text-align: center;
+      }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="san">Student Information Form</h2>
+    <form id="studentForm" method="POST" action="gbill">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="studentName">Student Name</label>
+        <input type="text" id="studentName" name="studentName" required>
+      </div>
+      <div class="form-group">
+        <label for="batchStartDate">Batch Start Date</label>
+        <input type="date" id="batchStartDate" name="batchStartDate" required>
+      </div>
+      <div class="form-group">
+        <label for="class">Class</label>
+        <select id="class" name="classes" required>
+          <option value="">Select Class</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="board">Board</label>
+        <input type="text" id="board" name="board" required value={{ board }}>
+      </div>
+      <div class="form-group">
+        <label for="mobileNumber">Mobile Number</label>
+        <input type="tel" id="mobileNumber" name="mobileNumber" required>
+      </div>
+      <div class="form-group">
+        <label for="alternativeNumber">Alternative Number</label>
+        <input type="tel" id="alternativeNumber" name="alternativeNumber">
+      </div>
+      <div class="form-group">
+        <label for="schoolName">School Name</label>
+        <input type="text" id="schoolName" name="schoolName" required>
+      </div>
+      <div class="form-group">
+        <label for="parentName">Parent Name</label>
+        <input type="text" id="parentName" name="parentName" required>
+      </div>
+      <div class="form-group">
+        <label for="course">Course</label>
+        <input type="text" id="course" name="course" value={{ course }} required>
+      </div>
+
+      <div class="form-group">
+        <label for="dpPaidAmount">DP Paid Amount</label>
+        <input type="number" id="dpPaidAmount" name="dpPaidAmount" required>
+      </div> 
+
+
+      <div class="form-group">
+        <label for="dpPaidAmount">Registeration fees</label>
+        <input type="number" id="Regfee" name="Regfee"  required>
+      </div> 
+
+
+      <div class="form-group">
+        <label for="cAmount">Tution fees</label>
+        <input type="number" id="cAmount" name="cAmount"  required onkeyup="totalcfee()">
+      </div>
+
+      <div class="form-group">
+        <label for="remainingBalance">Remaining Balance</label>
+        <input type="number" id="remainingBalance" name="remainingBalance"  required onclick="rbalance()">
+      </div>
+
+
+      <div class="form-group">
+        <label for="remainingBalance">Total course fees</label>
+        <input type="number" id="Totalbalance" name="Totalbalance"  required onkeyup="rbalance()">
+      </div>
+
+
+      <div class="form-group">
+        <label for="emiOption">EMI Option</label>
+        <select id="emiOption" name="emiOption" required onchange="onc(this.value)">
+          <option value="">Select EMI Option</option>
+          <option value="Trial class">Trial class</option>
+          <option value="Full cash payment">Full cash payment</option>
+          <option value="EMI-1 installment" id="emicash">EMI-1 installment</option>
+          <option value="EMI-3 installment">EMI-3 installment</option>
+          <option value="EMI-5 installment">EMI-5 installment</option>
+          <option value="EMI-7 installment">EMI-7 installment</option>
+        </select>
+      </div>
+      
+     
+      
+      <div class="form-group">
+        <label for="emiAmount" id="fullcash">Full Cash</label>
+        <input type="number" id="emiAmount" name="emiAmount">
+      </div>
+      <!-- Add more form fields as needed for payment info or other details -->
+      <div class="center">
+        <button type="submit" style="font-weight: bold;">Submit</button>
+      </div>
+    </form>
+      <script>
+        // Wrap the JavaScript code inside the DOMContentLoaded event
+        document.addEventListener("DOMContentLoaded", function() {
+          // Add event listener to the select element
+          document.getElementById('emiOption').addEventListener('change', function() {
+            // Get the selected value from the dropdown
+            var selectedValue = this.value;
+      
+            // Get the label element with id="fullcash"
+            var fullCashLabel = document.getElementById('fullcash');
+      
+            // Check if the selected value is not empty and is one of the options 4, 5, 6, or 7
+            if (selectedValue !== "" && (selectedValue === "EMI-3 installment" || selectedValue === "EMI-5 installment" || selectedValue === "EMI-7 installment" || selectedValue == "EMI-1 installment")) {
+              // Set the label text to "Balance Pending" for options 4, 5, 6, or 7
+              fullCashLabel.textContent = "EMI per month";
+            } else if (selectedValue !== "") {
+              // Set the label text to "Full Cash Paid" for other non-empty options
+              fullCashLabel.textContent = "Full Cash Paid";
+            } else {
+              // Set the label text back to "Full Cash" if no option is selected
+              fullCashLabel.textContent = "Full Cash";
+            }
+          });
+        });
+      </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          // Add event listener to the select element
+          document.getElementById('emiOption').addEventListener('change', function() {
+            onc(this.value); // Call the onc() function with the selected value
+          });
+        });
+    
+        function onc(selectedValue) {
+          let first_installment, third_installment, fifth_installment, seventh_installment;
+          let emv, monthly_pay;
+          let board = document.getElementById('board').value;
+          let course = document.getElementById('course').value;
+          let camount = document.getElementById('cAmount');
+          let remain=document.getElementById('remainingBalance');
+          let dp=5550;
+          let amt1,eamt;
+          if (board === "state" && course === "Standard") {
+            first_installment = 20500;
+            third_installment = 22500;
+            fifth_installment = 23500;
+            seventh_installment = 24500;
+          } else if (board === "state" && course === "Super") {
+            first_installment = 17500;
+            third_installment = 18500;
+            fifth_installment = 20000;
+          } else if (board === "state" && course === "Navodaya") {
+            first_installment = 15500;
+            third_installment = 16500;
+            fifth_installment = 17700;
+          }
+
+
+          if (board === "cbse" && course === "Standard") {
+            first_installment = 20500;
+            third_installment = 22500;
+            fifth_installment = 23500;
+            seventh_installment = 24500;
+          } else if (board === "cbse" && course === "Super") {
+            first_installment = 17500;
+            third_installment = 18500;
+            fifth_installment = 20000;
+          } else if (board ==="cbse" && course === "Navodaya") {
+            first_installment = 15500;
+            third_installment = 16500;
+            fifth_installment = 17700;
+          }
+
+          if (board === "icic" && course === "Standard") {
+            first_installment = 25500;
+            third_installment = 27000;
+            fifth_installment = 28000;
+            seventh_installment = 29000;
+          } else if (board === "icic" && course === "Super") {
+            first_installment = 17500;
+            third_installment = 18500;
+            fifth_installment = 20000;
+          } else if (board === "icic" && course === "Navodaya") {
+            first_installment = 15500;
+            third_installment = 16500;
+            fifth_installment = 17700;
+          }
+
+
+
+
+
+
+
+    
+          switch (selectedValue) {
+            case "EMI-1 installment":
+              amt1=document.getElementById("remainingBalance").value;
+            
+              document.getElementById("emiAmount").value=amt1;
+              document.getElementById("emiAmount").textContent=amt1;
+              break;
+            case "EMI-3 installment":
+              amt1=document.getElementById("remainingBalance").value;
+              eamt=parseInt(amt1) / 3;
+              var roundedAmt = Math.ceil(eamt);
+              document.getElementById("emiAmount").value=roundedAmt;
+              document.getElementById("emiAmount").textContent=amt1;
+              break;
+            case "EMI-5 installment":
+              amt1=document.getElementById("remainingBalance").value;
+              eamt=parseInt(amt1) / 5;
+              var roundedAmt = Math.ceil(eamt);
+              document.getElementById("emiAmount").value=roundedAmt;
+              document.getElementById("emiAmount").textContent=roundedAmt;
+              break;
+            case "EMI-7 installment":
+              amt1=document.getElementById("remainingBalance").value;
+              eamt=parseInt(amt1) / 7;
+              var roundedAmt = Math.ceil(eamt);
+              document.getElementById("emiAmount").value=roundedAmt;
+              document.getElementById("emiAmount").textContent=roundedAmt;
+              break;
+            case "Trial class":
+              
+              document.getElementById("emiAmount").value=0; 
+              document.getElementById("emiAmount").textContent=0;  
+                  break;
+            case "Full cash payment":
+              let rfee=document.getElementById('Regfee').value;
+              let tfee=document.getElementById('cAmount').value;
+              let amount=parseInt(rfee)+parseInt(tfee);
+              document.getElementById("emiAmount").value=amount;
+              document.getElementById("emiAmount").textContent=amount;
+              document.getElementById("remainingBalance").textContent="0";
+              document.getElementById("remainingBalance").value="0";
+              document.getElementById("dpPaidAmount").textContent="0";
+              document.getElementById("dpPaidAmount").value="0";
+              break;
+          }
+    
+          // Set the value of the course fees input field (cAmount)
+          //camount.value = emv;
+    
+          // Update the value of the Full Cash input field (emiAmount)
+         
+        }
+        function totalcfee(){
+          let rfee=document.getElementById('Regfee').value;
+          let tfee=document.getElementById('cAmount').value;
+          let tot;
+          tot=parseInt(rfee)+parseInt(tfee);
+          
+          document.getElementById('Totalbalance').value=tot;
+          document.getElementById('Totalbalance').textContent=tot;
+        }
+        function rbalance(){
+          let tbal=document.getElementById('Totalbalance').value;
+          let dpbal=document.getElementById('dpPaidAmount').value;
+
+          let rbal=parseInt(tbal) - parseInt(dpbal);
+          
+          document.getElementById('remainingBalance').value=rbal.toString();
+          document.getElementById('remainingBalance').textContent=rbal;
+        }
+      </script>
+  
+</body>
+</html>
